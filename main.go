@@ -32,6 +32,11 @@ func main() {
 		fmt.Println(scanner.Text())
 	}
 
-	color, _ := colorful.Hex("#3d0b37")
-	fmt.Println(gamut.Monochromatic(color, 3))
+	color, _ := colorful.Hex("#8A2BE2")
+	pallette := gamut.Monochromatic(color, 3)
+	//fmt.Println(pallette)
+	for _, v := range pallette {
+		c, _ := colorful.MakeColor(v)
+		fmt.Println(c.Hex())
+	}
 }
