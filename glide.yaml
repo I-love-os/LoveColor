@@ -1,0 +1,5 @@
+package: LoveColor
+import:
+- package: github.com/muesli/gamut
+- package: github.com/lucasb-eyer/go-colorful
+  version: ^1.0.0

@@ -1,0 +1,34 @@
+hash: d4da4bbf2904a4378fcec0b92ee1c85b9742452d3240f5c79e5f4696f2e11f72
+updated: 2018-11-16T13:20:53.818691943+01:00
+imports:
+- name: github.com/golang/freetype
+  version: e2365dfdc4a05e4b8299a783240d4a7d5a65d4e4
+  subpackages:
+  - raster
+  - truetype
+- name: github.com/lucasb-eyer/go-colorful
+  version: 345fbb3dbcdb252d9985ee899a84963c0fa24c82
+- name: github.com/muesli/clusters
+  version: a07a36e67d36635392ec89f47d0e0c9da99b7dbf
+- name: github.com/muesli/gamut
+  version: 79507eb4867ccd96aa8cd59c167830493029baf2
+- name: github.com/muesli/kmeans
+  version: e36119fa8e4ee2e7347fddbfeec21957a3eccd90
+- name: github.com/wcharczuk/go-chart
+  version: 3cb33d48d32d580a77d3712f2db2be1388a00cac
+  subpackages:
+  - drawing
+  - matrix
+  - roboto
+  - seq
+  - util
+- name: github.com/xrash/smetrics
+  version: a3153f7040e90324c58c6287535e26a0ac5c1cc1
+- name: golang.org/x/image
+  version: cd38e8056d9b27bb2f265effa37fb0ea6b8a7f0f
+  subpackages:
+  - draw
+  - font
+  - math/f64
+  - math/fixed
+testImports: []
