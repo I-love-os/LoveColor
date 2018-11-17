@@ -1,13 +1,23 @@
-hash: d4da4bbf2904a4378fcec0b92ee1c85b9742452d3240f5c79e5f4696f2e11f72
-updated: 2018-11-16T13:20:53.818691943+01:00
+hash: da992daa87a9d45776802625463c892809d812a3e77e58b53b651e2651f8cca1
+updated: 2018-11-17T15:16:36.099328954+01:00
 imports:
+- name: github.com/AlecAivazis/survey
+  version: fb519f89e19299d852ffdd9b734af122d2dcbd30
 - name: github.com/golang/freetype
   version: e2365dfdc4a05e4b8299a783240d4a7d5a65d4e4
   subpackages:
   - raster
   - truetype
+- name: github.com/kballard/go-shellquote
+  version: 95032a82bc518f77982ea72343cc1ade730072f0
 - name: github.com/lucasb-eyer/go-colorful
   version: 345fbb3dbcdb252d9985ee899a84963c0fa24c82
+- name: github.com/mattn/go-colorable
+  version: efa589957cd060542a26d2dd7832fd6a6c6c3ade
+- name: github.com/mattn/go-isatty
+  version: 3fb116b820352b7f0c281308a4d6250c22d94e27
+- name: github.com/mgutz/ansi
+  version: 9520e82c474b0a04dd04f8a40959027271bab992
 - name: github.com/muesli/clusters
   version: a07a36e67d36635392ec89f47d0e0c9da99b7dbf
 - name: github.com/muesli/gamut
@@ -31,4 +41,13 @@ imports:
   - font
   - math/f64
   - math/fixed
+- name: golang.org/x/sys
+  version: 93218def8b18e66adbdab3eca8ec334700329f1f
+  subpackages:
+  - unix
+- name: gopkg.in/AlecAivazis/survey.v1
+  version: fb519f89e19299d852ffdd9b734af122d2dcbd30
+  subpackages:
+  - core
+  - terminal
 testImports: []
