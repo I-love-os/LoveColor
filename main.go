@@ -20,7 +20,6 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	//TODO: Handle ctrl + c
 
 	configPath := fmt.Sprintf(`/home/%s/.config/Love/schemes.conf`, currentUser.Username)
 	configFile, err := ioutil.ReadFile(configPath)
@@ -49,6 +48,8 @@ func main() {
 	}
 	survey.AskOne(selectedSchemePrompt, &selectedScheme, nil)
 
+	utils.CheckIfEmpty(&selectedScheme, true, utils.Survey{Prompt:selectedSchemePrompt, Stype:"select"})
+
 	if selectedScheme == "Add new scheme" {
 		schemeName := ""
 		schemeNamePrompt := &survey.Input{Message: "So, how would you like to name this AWESOME scheme?"}
@@ -59,6 +60,8 @@ func main() {
 			schemeNamePrompt := &survey.Input{Message: "So AGAIN, how would you like to name this AWESOME scheme (remember you can not type just empty space)?"}
 			survey.AskOne(schemeNamePrompt, &schemeName, nil)
 		}
+
+		utils.CheckIfEmpty(&schemeName, true, utils.Survey{Prompt:schemeNamePrompt, Stype:"select"})
 
 		lines = append(lines, " ", fmt.Sprintf(`    %s: {`, schemeName), `      machine_color: "#FFFFFF"`, `      dir_color: "#FFFFFF"`, `      git_color: "#FFFFFF"`, `      git_diff_color: "#f6f4f5"`, `      font_color: "#495049"`, "    }")
 
@@ -72,6 +75,8 @@ func main() {
 	}
 	survey.AskOne(selectModePrompt, &selectedMode, nil)
 
+	utils.CheckIfEmpty(&selectedMode, true, utils.Survey{Prompt:selectModePrompt, Stype:"select"})
+
 	var palette []color.Color
 	var colors []string
 
@@ -79,6 +84,8 @@ func main() {
 		inputColor := ""
 		askColorPrompt := &survey.Input{Message: "Hi, wha is yer fav color?"}
 		survey.AskOne(askColorPrompt, &inputColor, nil)
+
+		utils.CheckIfEmpty(&inputColor, true, utils.Survey{Prompt:askColorPrompt, Stype:"input"})
 
 		if !strings.HasPrefix(inputColor, "#") {
 			inputColor = utils.GetHTMLcolor(inputColor)
@@ -89,9 +96,11 @@ func main() {
 		genType := ""
 		genTypePrompt := &survey.Select{
 			Message: "How do you want to generate your color scheme?",
-			Options: []string{"Triadic", "Monochromatic", "Shades"},
+			Options: []string{"Triadic", "Monochromatic", "Shades", "Tints", "Tones"},
 		}
 		survey.AskOne(genTypePrompt, &genType, nil)
+
+		utils.CheckIfEmpty(&genType, true, utils.Survey{Prompt:genTypePrompt, Stype:"input"})
 
 		switch genType {
 		case "Triadic":
@@ -100,6 +109,10 @@ func main() {
 			palette = gamut.Monochromatic(baseColor, 2)
 		case "Shades":
 			palette = gamut.Shades(baseColor, 2)
+		case "Tints":
+			palette = gamut.Tints(baseColor, 2)
+		case "Tones":
+			palette = gamut.Tones(baseColor, 2)
 		default:
 			panic(fmt.Sprintf(`Option "%s" does not exist`, genType))
 		}
