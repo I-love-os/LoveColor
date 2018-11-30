@@ -3,15 +3,16 @@ package main
 import (
 	"LoveColor/utils"
 	"fmt"
-	"github.com/lucasb-eyer/go-colorful"
-	"github.com/muesli/gamut"
-	"gopkg.in/AlecAivazis/survey.v1"
 	"image/color"
 	"io/ioutil"
 	"log"
 	"os/user"
 	"regexp"
 	"strings"
+
+	"github.com/lucasb-eyer/go-colorful"
+	"github.com/muesli/gamut"
+	"gopkg.in/AlecAivazis/survey.v1"
 )
 
 func main() {
@@ -34,7 +35,10 @@ func main() {
 
 	for _, line := range lines {
 		if match, _ := regexp.MatchString(`\w+:.*?{`, line); match && !strings.HasPrefix(line, "#") {
-			replacer := strings.NewReplacer(":", ""," ", "", "{", "", "}", "")
+			replacer := strings.NewReplacer(":", "", " ", "", "{", "", "}", "")
+			if strings.Contains(line, "no_truecolor") {
+				continue
+			}
 			schemes = append(schemes, replacer.Replace(line))
 		}
 	}
@@ -48,20 +52,20 @@ func main() {
 	}
 	survey.AskOne(selectedSchemePrompt, &selectedScheme, nil)
 
-	utils.CheckIfEmpty(&selectedScheme, true, utils.Survey{Prompt:selectedSchemePrompt, Stype:"select"})
+	utils.CheckIfEmpty(&selectedScheme, true, utils.Survey{Prompt: selectedSchemePrompt, Stype: "select"})
 
 	if selectedScheme == "Add new scheme" {
 		schemeName := ""
 		schemeNamePrompt := &survey.Input{Message: "So, how would you like to name this AWESOME scheme?"}
 		survey.AskOne(schemeNamePrompt, &schemeName, nil)
 
-		if schemeName == "" || schemeName == " " {
+		if schemeName == "" || schemeName == " " || schemeName == "no_truecolor" {
 			schemeName := ""
 			schemeNamePrompt := &survey.Input{Message: "So AGAIN, how would you like to name this AWESOME scheme (remember you can not type just empty space)?"}
 			survey.AskOne(schemeNamePrompt, &schemeName, nil)
 		}
 
-		utils.CheckIfEmpty(&schemeName, true, utils.Survey{Prompt:schemeNamePrompt, Stype:"select"})
+		utils.CheckIfEmpty(&schemeName, true, utils.Survey{Prompt: schemeNamePrompt, Stype: "select"})
 
 		lines = append(lines, " ", fmt.Sprintf(`    %s: {`, schemeName), `      machine_color: "#FFFFFF"`, `      dir_color: "#FFFFFF"`, `      git_color: "#FFFFFF"`, `      git_diff_color: "#f6f4f5"`, `      font_color: "#495049"`, "    }")
 
@@ -75,7 +79,7 @@ func main() {
 	}
 	survey.AskOne(selectModePrompt, &selectedMode, nil)
 
-	utils.CheckIfEmpty(&selectedMode, true, utils.Survey{Prompt:selectModePrompt, Stype:"select"})
+	utils.CheckIfEmpty(&selectedMode, true, utils.Survey{Prompt: selectModePrompt, Stype: "select"})
 
 	var palette []color.Color
 	var colors []string
@@ -85,7 +89,7 @@ func main() {
 		askColorPrompt := &survey.Input{Message: "Hi, wha is yer fav color?"}
 		survey.AskOne(askColorPrompt, &inputColor, nil)
 
-		utils.CheckIfEmpty(&inputColor, true, utils.Survey{Prompt:askColorPrompt, Stype:"input"})
+		utils.CheckIfEmpty(&inputColor, true, utils.Survey{Prompt: askColorPrompt, Stype: "input"})
 
 		if !strings.HasPrefix(inputColor, "#") {
 			inputColor = utils.GetHTMLcolor(inputColor)
@@ -100,7 +104,7 @@ func main() {
 		}
 		survey.AskOne(genTypePrompt, &genType, nil)
 
-		utils.CheckIfEmpty(&genType, true, utils.Survey{Prompt:genTypePrompt, Stype:"input"})
+		utils.CheckIfEmpty(&genType, true, utils.Survey{Prompt: genTypePrompt, Stype: "input"})
 
 		switch genType {
 		case "Triadic":
